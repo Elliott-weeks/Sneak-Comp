@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if cart_id%}
+<div class="container-sm textAlignCent" >
+  
+      <i class="far fa-check-square fa-5x" style="color:green"></i>
+      <h3 style="margin-top:2%;margin-bottom:2%;">Your raffle entry is complete! </h3>
+      <h5 style="margin-bottom:2%;">Order number is: #{{cart_id}}</h5>
+      <p>You will be recieving an email confirmation shortly with your full order details and raffle entries.</p><br>
+      
+      <h1 style="margin-bottom:2%;">🤞 🤞 🤞 🤞 🤞 🤞</h1>
+      <p class="light-font-weight"><u>Good luck</u></p>
+      
+
+
+   
+   
+</div>
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,67 @@
+<div class="col-lg-4 " style="margin-top:10%">
+<a href="{% url 'competition' comp.id %}" style="text-decoration: none;color: black;">
+  <div
+    class="card shadow-lg"
+  
+    style="
+      height: auto;
+      width: auto;
+      border: 0px;
+      padding-left: 10px;
+      padding-right: 10px;
+    "
+  >
+    
+    <div class="container">
+    <img class="card-img-top" src="{{comp.image.url}}" alt="shoe image" />
+    {% if comp.get_total_number_of_entries >= comp.ticket_limit or comp.state == "awaiting"  %}
+     <div class="top-left custom-badge-closed" ><i class="fas fa-ticket-alt" style="margin-right:10px;"></i>Awaiting draw</div>
+    {% else %}
+    <div class="top-left custom-badge-open" ><i class="fas fa-ticket-alt" style="margin-right:10px;"></i>Open</div>
+    {% endif %}
+   
+ 
+    </div>
+    <div class="card-body">
+      <h3
+        class="card-title higher-font-weight"
+        style="
+          height: 40px;
+          line-height: 20px;
+          overflow: hidden;
+          white-space: pre;
+          text-overflow: ellipsis;
+        "
+      >
+        {{comp.name}}
+      </h3>
+
+        <div class="progress" style="margin:15px 0">
+      <div  class="progress-bar bg-success"
+                    role="progressbar"
+                    style="width: 25%;"
+                    aria-valuenow= "{{ comp.get_total_number_of_entries}}"
+                    aria-valuemax= "{{comp.ticket_limit}}">25%</div>
+    </div>
+
+      <p style="text-align: left">
+        Draw open now
+        <span style="float: right" class="higher-font-weight">
+          £{{comp.price}}
+        </span>
+
+      </p>
+    
+
+      {% if comp.get_total_number_of_entries >= comp.ticket_limit or comp.state == "awaiting"  %}
+       <button class="btn btn-info" style="width:100%;background-color: purple;color: white; border:purple;" disabled>Awaiting draw!</button>
+    {% else %}
+      <a href="{% url 'competition' comp.id %}" class="btn btn-info" style="width:100%;background-color:  rgb(15,202,240);color: white; border: rgb(15,202,240);" >Enter now</a>
+    {% endif %}
+
+   
+    </div>
+  </div>
+  </a>
+  <hr>
+</div>

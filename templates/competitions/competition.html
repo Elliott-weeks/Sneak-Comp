@@ -1,0 +1,298 @@
+{% extends 'base.html' %} {% block content %}
+<section style="margin-top:100px;">
+{% if competition%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg ">
+            <img src="{{competition.image.url}}" style="width:100%;height:auto;" class="center shadow-lg"></img>
+        </div>
+        <div class="col-lg" style="margin-top:50px">
+        
+            <div class="row" style="margin-bottom:20px;">
+                <div class="col-sm">
+                <h2>{{competition.name}}</h2>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-sm">
+                        <p style="text-align:left;" class="higher-font-weight">
+                        Entry per ticket
+                        <span style="float:right;">
+                            £{{competition.price}}
+                        </span>
+                        <hr>
+                    </p>
+                </div>
+             </div>
+              <div class="row">
+                <div class="col-sm">
+                        <p style="text-align:left;" class="higher-font-weight">
+                        Number of entries:
+                        <span style="float:right;">
+                            {{competition.ticket_limit}}
+                        </span>
+                        <hr>
+                    </p>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-sm">
+                        <p style="text-align:left;" class="higher-font-weight">
+                          UK size
+                        <span style="float:right;">
+                            {{competition.size}}
+                        </span>
+                        <hr>
+                    </p>
+                </div>
+             </div>
+              <div class="row">
+                <div class="col-sm" >
+                        <p style="text-align:left;height:50px;" class="higher-font-weight">
+                          Delivery
+                        <span style="float:right;height:50px;" class="higher-font-weight">
+                            Items will be shipped or<br> delivered in person
+                        </span>
+                        <hr>
+                    </p>
+                </div>
+             </div>
+             <div class="row" >
+                <div class="col-sm" >
+                        <p class="higher-font-weight" style="text-align:left;">
+                          Competitions End:
+                        <span class="higher-font-weight" style="float:right;">
+                            {{competition.competition_end_date}}
+                        </span>
+                        <hr>
+                    </p>
+                </div>
+             </div>
+               <div class="row" >
+                    <div class="col-sm" >
+                        <p class="higher-font-weight" style="text-align:left;height:40px">
+                          Winners:
+                        <span class="higher-font-weight" style="float:right;">
+                            The competition will have<br> <u>one winner</u>
+                        </span>
+                        <hr>
+                    </p>
+                    </div>
+                </div>
+               <div class="row" >
+                <div class="col-sm" >
+                    <div class="progress" style="height:40px">
+                        <div
+                            class="progress-bar bg-success"
+                            role="progressbar"
+                            style="width: 25%;"
+                            aria-valuenow= "{{ competition.get_total_number_of_entries }}"
+                            aria-valuemax= "{{competition.ticket_limit}}"
+                        >
+                            25% sold
+                        </div>
+                     </div>
+                     
+                </div>
+                 <div class="row">
+                    <div class="col-sm" style="margin:2%">
+
+                     <div class="countDownContainer">
+                        
+                        <div class="countDownBox bg-light text-dark"><p id="days-count">loading...</p></div>
+                        <div class="countDownBox bg-light text-dark"><p id="hours-count">loading...</p></div>
+                        <div class="countDownBox bg-light text-dark"><p id="mins-count">loading...</p></div>
+                        <div class="countDownBox bg-light text-dark"><p id="secs-count">loading...</p></div>
+
+                       
+
+                        </div>
+                       
+                         <hr>
+                    
+                    </div>
+
+                       
+                    
+                </div>
+             </div>
+             
+
+              <div class="row" style="margin-top:20px;" >
+                    <div class="col-sm" >
+                        <p style="text-align:left;">
+                        {{ competition.description }}
+                       
+                    </p>
+                    </div>
+                </div>
+                
+                <script>
+                window.addEventListener('DOMContentLoaded', function() {
+                    var endDate = "{{competition.competition_end_date}}"
+                    var state = "{{competition.state}}"
+                    console.log(state)
+                    countDownTimer("days-count","hours-count", "mins-count", "secs-count" , endDate, state)
+
+                });
+                
+                </script>
+
+
+                  <div class="row" style="margin-top:50px;">
+                    <div class="col-sm">
+                        <h5 >
+                            {{competition.competition_question}}
+                        </h5>
+                    </div>
+                    
+                </div>
+
+               
+
+
+                 <div class="row" >
+                    <div class="col-sm" style="padding:5" >
+                      
+                    <select
+                     {% if competition.get_total_number_of_entries >= comp.ticket_limit or competition.state == "awaiting"  %}
+                                  disabled
+                                  {% endif %}
+                     id="answer-select" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" onChange ="questionAnswerSelected(this);">
+                    <option selected>Select correct answer</option>
+                    <option value="1">{{competition.competition_answers_one}}</option>
+                    <option value="2">{{competition.competition_answers_two}}</option>
+                    <option value="3">{{competition.competition_answers_three}}</option>
+                    </select>
+                     </div>
+                </div>
+
+                      
+                            <div class="row">
+                                <div class="col-md" style="padding:5">
+                                  <select 
+                                  {% if competition.get_total_number_of_entries >= comp.ticket_limit or competition.state == "awaiting"  %}
+                                  disabled
+                                  {% endif %}
+                                  
+                                  id="ticket-select" class="form-select form-select-lg mb-3" style="height:50px" aria-label=".form-select-lg example" onChange="newTicketSelection(this);">
+                                    <option >Select ticket amount</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="col-md">
+                                 <div style="width:100%;">
+                                   {% if competition.get_total_number_of_entries >= comp.ticket_limit or competition.state == "awaiting"  %}
+                                          <button id="add-btn" onclick="addToCart();"  style="float:right;height:50px;width:100%;" disabled class="btn btn-info">Closed</button>
+                                        {% else %}
+                                         <button id="add-btn"  onclick="addToCart();"  style="float:right;height:50px;width:100%;" class="btn btn-info">Enter Competition</button>
+                                        {% endif %}
+                        
+                                </div>
+                                </div>
+                                <p id="error" style="color:red;"></p>
+                                <a  href="{% url 'free-postal-entry'  %}" >For information on free postal entries click here.</a>
+                            </div>
+                        
+                
+                       
+                        
+                       
+                        <script >
+                        var ticketsSelected = null
+                        var questionAnswer= null
+                        function addToCart(){
+                            var ele = document.getElementById("error")
+                            var ans = document.getElementById("answer-select")
+                            var ticket = document.getElementById("ticket-select")
+                             if( questionAnswer == null){
+                                ele.innerHTML = "You must select a question answer"
+                                ans.style.border = "2px solid red"
+                                return
+
+                            }
+                            if(ticketsSelected == null ){
+                                ans.style.border = "1px solid gray"
+                                ele.innerHTML = "You must select a ticket amount"
+                                ticket.style.border = "2px solid red"
+                                return
+                            }
+                           
+
+                            var url_mask = "{% url 'add-to-cart' competition_id=99999999 amount=8888888 answer_selection=777777%}".replace("99999999", "{{competition.id}}").replace("8888888",ticketsSelected ).replace("777777", questionAnswer);
+
+                             window.location.href = url_mask 
+                        }
+                         function questionAnswerSelected(selection){
+                            questionAnswer = selection.options[selection.selectedIndex].value
+                        }
+                        function newTicketSelection(selected){
+                            ticketsSelected = selected.options[selected.selectedIndex].value
+                        }
+                       
+
+                        
+
+                        </script>
+                   
+                  
+           
+                      
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+{% endif %}
+<script>
+function setPercentageRaffleCompletion(){
+    var elements =  document.getElementsByClassName("progress-bar")
+    for (i = 0; i < elements.length; i++) {
+        var currentVal = elements[i].getAttribute('aria-valuenow')
+        var ticketLimit = elements[i].getAttribute('aria-valuemax')
+        console.log("current value = " + currentVal)
+        console.log("current ticketLimit = " + ticketLimit)
+        var percent = ( currentVal / ticketLimit ) * 100
+        if(percent > 15){
+          elements[i].style.width = percent+ "%"
+          
+        }else{
+           elements[i].style.width = 15+ "%"
+        }
+        elements[i].innerHTML = Math.round(percent) + "% sold"
+
+      }
+}
+
+setPercentageRaffleCompletion()
+
+</script>
+
+</section>
+ {% include 'partials/_freeshipping.html'%}
+
+
+<section class="howToPlayContainer" style="margin-top:0px;">
+ {% include 'partials/_howToPlay.html'%}
+</section>
+
+{% endblock %}
+

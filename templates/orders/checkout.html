@@ -1,0 +1,151 @@
+{% extends "base.html" %} {% block content %}
+
+
+<!-- Set up a container element for the button -->
+<div class="loading" id="spinner">Loading&#8230;</div>
+<div class="container-sm textAlignCent" style="position: relative; z-index: 1;" >
+  <div class="card" style="width: 50%; margin: 0 auto">
+    <div class="card-body" style="padding: 0 auto" >
+      <h5 class="light-font-weight" style="margin-top:2%;">Payment method</h5>
+      <p class="light-font-weight" style="margin-top:2%;">Please select the payment method you wish to use to complete this transaction.</p>
+
+      <div style="margin-top:10%;position: relative; z-index: 1;" id="paypal-button-container"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Include the PayPal JavaScript SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=AeP6fpeffBNZW2XN44DKBlDEs2kqdxb0pVDVhCyQ9HuV0JUABqtgFbE6-u6adq8uVTGpufDSQtRy9KgG&currency=GBP"></script>
+
+<script>
+  
+  // Render the PayPal button into #paypal-button-container
+  function showSpinner(){
+    var spinner = document.getElementById("spinner");
+    spinner.style.visibility = "visible";
+
+}
+
+function hideSpinner(){
+    var spinner = document.getElementById("spinner");
+    spinner.style.visibility = "hideen";
+
+}
+
+
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      var cookies = document.cookie.split(";");
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+  var csrftoken = getCookie("csrftoken");
+
+  var total = "{{ object.get_total}}";
+  var cartId = "{{object.id}}";
+
+  function completeOrder(details) {
+    var url = "{% url 'payment-processed' %}";
+    details["cartId"] = cartId;
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+      body: JSON.stringify(details),
+    }).then((res) => {
+      if (res.redirected) {
+        hideSpinner()
+        window.location.href = res.url;
+      }
+    });
+  }
+
+  paypal
+    .Buttons({
+      // Set up the transaction
+      createOrder: function (data, actions) {
+       
+        return fetch("{% url 'paypal-create'%}", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "X-CSRFToken": csrftoken,
+          },
+        })
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (orderData) {
+            return orderData.id;
+          });
+      },
+      // Finalize the transaction
+      
+
+      onApprove: function (data, actions) {
+        // ping server to see if we have space 
+        // if it is now full 
+        // cancel payment 
+         showSpinner()
+
+        return fetch("/paypal/" + data.orderID + "/capture/" + cartId, {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+            "X-CSRFToken": csrftoken,
+          },
+        })
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (orderData) {
+             showSpinner()
+            // Three cases to handle:
+            //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+            //   (2) Other non-recoverable errors -> Show a failure message
+            //   (3) Successful transaction -> Show confirmation or thank you
+
+            // This example reads a v2/checkout/orders capture response, propagated from the server
+            // You could use a different API or structure for your 'orderData'
+            var errorDetail =
+              Array.isArray(orderData.details) && orderData.details[0];
+
+            if (errorDetail && errorDetail.issue === "INSTRUMENT_DECLINED") {
+              hideSpinner()
+              return actions.restart(); // Recoverable state, per:
+              // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
+            }
+
+            if (errorDetail) {
+               hideSpinner()
+              var msg = "Sorry, your transaction could not be processed.";
+              if (errorDetail.description)
+                msg += "\n\n" + errorDetail.description;
+              if (orderData.debug_id) msg += " (" + orderData.debug_id + ")";
+              return alert(msg); // Show a failure message
+            }
+           
+
+            // Show a success message
+            completeOrder(orderData)
+
+            
+          });
+      },
+    })
+    .render("#paypal-button-container");
+</script>
+
+{% endblock content %}

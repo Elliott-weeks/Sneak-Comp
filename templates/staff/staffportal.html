@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+
+<h6>Download entries for current Competitions awaiting draw:</h6>
+
+{%if competions%}
+<ul>
+ {% for comp in competions %}
+    <li><a href="{% url 'comp-download' comp.id%}">{{comp.name}}</a></li>
+
+
+ {% endfor %}
+
+</ul
+
+{% endif %}
+
+{% endblock content %}

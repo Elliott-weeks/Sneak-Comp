@@ -1,0 +1,469 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Vollkorn:ital@0;1&display=swap');
+
+
+body{
+  font-family: 'Vollkorn', serif;
+  font-size: 1.2rem;
+}
+
+.carouselContainerHeight {
+  max-height: 700px;
+}
+
+.textAlignCent {
+  text-align: center;
+}
+
+.hrMargin {
+  margin: 2% 2%;
+}
+.image-container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+.align-image{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+
+}
+
+
+.alignContent{
+  justify-content: center;
+}
+
+.custom-badge-open{
+  background-color: none;
+  color:  rgb(15,202,240);
+  padding: 5px;
+  border-radius: 10px;
+}
+.custom-badge-closed{
+  background-color: none;
+  color: purple;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.howToPlayContainer {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background-image: linear-gradient(
+    to right,
+    rgb(23, 154, 180),
+    rgb(5, 68, 94)
+  );
+}
+.setPrimaryTextCol {
+  color: white;
+}
+
+.cardCentre {
+  margin: auto;
+}
+
+.alignleft {
+  float: left;
+}
+.alignright {
+  float: right;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.borderBlue {
+  border: solid rgb(23, 154, 180);
+}
+.centered-li {
+  list-style-type: none;
+}
+.root-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.burger-btn{
+  color: white;
+}
+.header-logo{
+  color: white;
+
+}
+#paypal-button-container{
+  position: relative;
+  z-index: 0;
+}
+.overlay-content li{
+  list-style-type: none;
+
+}
+main {
+  flex: 1;
+}
+.alert-messages {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  z-index: 7000;
+}
+
+.free-shipping{
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(238,238,238);
+  vertical-align: middle;
+  line-height: 50px; 
+
+}
+
+
+
+
+/* Absolute Center Spinner */
+.loading {
+  visibility: hidden;
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: visible;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.loading:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading:not(:required) {
+  /* hide "loading..." text */
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.loading:not(:required):after {
+  content: '';
+  display: block;
+  font-size: 10px;
+  width: 1em;
+  height: 1em;
+  margin-top: -0.5em;
+  -webkit-animation: spinner 1500ms infinite linear;
+  -moz-animation: spinner 1500ms infinite linear;
+  -ms-animation: spinner 1500ms infinite linear;
+  -o-animation: spinner 1500ms infinite linear;
+  animation: spinner 1500ms infinite linear;
+  border-radius: 0.5em;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+}
+
+/* Animation */
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.countDownBox{
+  display: table-cell;
+  border: 1px solid rgb(25,135,84);
+  height: 50px;
+  text-align: center;
+  padding: 0;
+  font-size: larger;
+  vertical-align: middle;
+}
+.countDownBox p{
+  margin-top: 15px;
+
+    
+}
+
+.higher-font-weight{
+  font-weight: 700;
+}
+.light-font-weight{
+  font-weight: 200;
+}
+
+
+.countDownContainer{
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 10px;
+ 
+
+}
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+header a{
+  text-decoration: none;
+  
+}
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 10%;
+  background-color: #24252a;
+  color: white;
+}
+.logo{
+  cursor: pointer;
+}
+.nav_links{
+  list-style: none;
+  margin-top: auto;
+  margin-bottom: auto;
+  color: white;
+}
+.nav_links li{
+  display: inline-block;
+  padding: 0px 20px;
+  color: white;
+}
+.nav_links li a{
+  transition: all 0.3s ease 0s;
+  color: white;
+}
+.nav_links li a:hover{
+  color: rgb(15,202,240);
+}
+.cart, .login-btn{
+  color: white;
+  padding: 0px 10px;
+
+}
+.right-burger{
+  display: none;
+}
+
+
+
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    #ticket-select{
+      width: 100%;
+    }
+    #add-btn{
+      width: 100%;
+    }
+
+}
+
+
+/* The Overlay (background) */
+.overlay {
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */   
+  height: 100%;
+  width: 0;
+  position: fixed; /* Stay in place */
+  z-index: 12; /* Sit on top */
+  left: 0;
+  top: 0;
+  background-color: rgb(0,0,0); /* Black fallback color */
+  background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+  position: relative;
+  top: 25%; /* 25% from the top */
+  width: 100%; /* 100% width */
+  text-align: center; /* Centered text/links */
+  margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: #818181;
+  display: block; /* Display block instead of inline */
+  transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
+}
+
+
+/* contact form*/
+.contact-form{
+  background: #fff;
+  margin-top: 10%;
+  margin-bottom: 5%;
+  width: 70%;
+  border-radius: 5px;
+}
+.contact-form .form-control{
+  border-radius:1rem;
+}
+.contact-image{
+  text-align: center;
+
+}
+.contact-image img{
+  height: auto;
+  width: 190px;
+  padding: 1%;
+}
+.contact-form form{
+  padding: 14%;
+}
+.contact-form form .row{
+  margin-bottom: -7%;
+}
+.contact-form h3{
+  margin-bottom: 8%;
+  margin-top: -10%;
+  text-align: center;
+  color: #0fcaf0;
+}
+.contact-form .btnContact {
+  width: 50%;
+  border: none;
+  border-radius: 1rem;
+  padding: 1.5%;
+  background: #dc3545;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}
+.btnContactSubmit
+{
+  width: 50%;
+  border-radius: 1rem;
+  padding: 1.5%;
+  color: #fff;
+  background-color: #0062cc;
+  border: none;
+  cursor: pointer;
+}
+#insta-message{
+  color: #0fcaf0;
+}
+
+
+
+

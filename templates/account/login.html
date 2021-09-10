@@ -1,0 +1,139 @@
+  
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+{% providers_media_js %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+<div class="container-md" style=" display: flex;justify-content: center;">
+<div class="card" style= "min-width:70%; margin-top:5%">
+  <div class="card-body">
+  
+<h1>{% trans "Sign In" %}</h1>
+
+{% get_providers as socialaccount_providers %}
+
+
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}Please sign in with one
+of your existing third party accounts.You will be using this account to sign into
+<u>{{ site_name }}</u>:{% endblocktrans %}</p>
+
+{% for provider in socialaccount_providers %}
+{% if provider.id == "openid" %}
+{% for brand in provider.get_brands %}
+
+<li class= "centered-li" >
+  <a title="{{brand.name}}" 
+     class="socialaccount_provider {{provider.id}} {{brand.id}} " 
+     href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
+     >{{brand.name}}</a>
+</li>
+{% endfor %}
+{% endif %}
+
+<li class= "centered-li textAlignCent" >
+  <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}} " 
+     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{%if provider.name == "Google"%}
+     <div class='g-sign-in-button'>
+    <div class="content-wrapper">
+        <div class='logo-wrapper'>
+            <img src='https://developers.google.com/identity/images/g-logo.png'>
+        </div>
+        <span class='text-container'>
+      <span id="google-sign-in">Sign in with Google</span>
+    </span>
+    </div>
+</div>
+{% elif provider.name == "Facebook" %}
+<div class="btn btn-block btn-social btn-facebook" style="background-color:#3b5998;text-align:center width:100%;">
+  <span id="facebook-sign-in" class="fa fa-facebook"></span>
+               Sign in with Facebook
+ </div>
+
+{% else %}
+{{provider.name}}
+
+{% endif%}
+
+
+     
+     </a>
+</li>
+{% endfor %}
+
+{% endif %}
+ 
+  </div>
+</div>
+
+<style>
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+    
+        .g-sign-in-button {
+            margin: 10px;
+            display: inline-block;
+            width: 240px;
+            height: 50px;
+            background-color: #4285f4;
+            color: #fff;
+            border-radius: 1px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+            transition: background-color .218s, border-color .218s, box-shadow .218s;
+        }
+
+        .g-sign-in-button:hover {
+            cursor: pointer;
+            -webkit-box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+            box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+        }
+
+        .g-sign-in-button:active {
+            background-color: #3367D6;
+            transition: background-color 0.2s;
+        }
+
+        .g-sign-in-button .content-wrapper {
+            height: 100%;
+            width: 100%;
+            border: 1px solid transparent;
+        }
+
+        .g-sign-in-button img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .g-sign-in-button .logo-wrapper {
+            padding: 15px;
+            background: #fff;
+            width: 48px;
+            height: 100%;
+            border-radius: 1px;
+            display: inline-block;
+        }
+
+        .g-sign-in-button .text-container {
+            font-family: Roboto,arial,sans-serif;
+            font-weight: 500;
+            letter-spacing: .21px;
+            font-size: 16px;
+            line-height: 48px;
+            vertical-align: top;
+            border: none;
+            display: inline-block;
+            text-align: center;
+            width: 180px;
+        }
+
+</style>
+
+
+
+</div>
+{% endblock %}

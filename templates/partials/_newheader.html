@@ -1,0 +1,77 @@
+{% load static %}
+{% load cart_template_tags %}
+<header class="shadow-lg">
+  <a href="/"><h1 class="header-logo">TSC</h1></a>
+  <nav>
+    <ul class="nav_links">
+      <li><a href="/">Home</a></li>
+      <li><a href="{% url 'how-to-play'  %}">How to play</a></li>
+      <li><a href="{% url 'faq'  %}">FAQ</a></li>
+       {% if user.is_authenticated and user.is_staff %}  
+        <li class="nav-item">
+          <a  href="{% url 'staff-portal'  %}">Raffle Management</a>
+        </li> 
+        {% endif%}    
+    </ul>
+  </nav>
+  <div class="right">
+    {% if user.is_authenticated %}
+
+    <a class="login-btn btn btn-primary" href="/accounts/logout">Logout</a>
+
+    {% else %}
+
+    <a class="login-btn btn btn-primary" id="login-btn" href="/accounts/login">Login</a>
+
+    {% endif%}
+
+    <a class="cart" href="{% url 'order-summary'  %}"
+      ><i class="fas fa-shopping-cart"></i>
+      <span class="badge rounded-pill bg-danger">{{ request.user|cart_item_count }}</span></a
+    >
+  </div>
+  <div class="right-burger">
+    <a class="cart" href="{% url 'order-summary'  %}"
+      ><i class="fas fa-shopping-cart"></i>
+      <span class="badge rounded-pill bg-danger"
+        >{{ request.user|cart_item_count }}</span
+      ></a
+    >
+    <button class="btn" onclick="openNav()">
+      <i style="color:white;" class="fas fa-bars fa-lg"></i>
+    </button>
+  </div>
+</header>
+
+<div id="myNav" class="overlay">
+  <!-- Button to close the overlay navigation -->
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+  <!-- Overlay content -->
+  <div class="overlay-content">
+    <li><a href="/">Home</a></li>
+    <li><a href="{% url 'how-to-play'  %}">How to play</a></li>
+    <li><a href="{% url 'faq'  %}">FAQ</a></li>
+     {% if user.is_authenticated %}
+
+    <li><a  href="/accounts/logout">Logout</a></li>
+
+    {% else %}
+
+     <li><a  href="/accounts/login">Login</a></li>
+
+    {% endif%}
+      {% if user.is_authenticated and user.is_staff %}  
+        <li >
+          <a  href="{% url 'staff-portal' %}">Raffle Management</a>
+        </li> 
+        {% endif%}  
+  </div>
+</div>
+
+<script>
+  window.addEventListener("DOMContentLoaded", function () {
+    resizeHeader();
+    window.addEventListener("resize", resizeHeader);
+  });
+</script>
